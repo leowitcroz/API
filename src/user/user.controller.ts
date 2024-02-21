@@ -43,7 +43,6 @@ export class UserController {
 
     @Delete(':id')
     async delete(@Param() params){
-        
         return params
     }
 
