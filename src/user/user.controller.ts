@@ -21,7 +21,7 @@ export class UserController {
     }
 
     @Get(':id')
-    async readOne(@Param() params) {
+    async readOne(@Param('id', ParseIntPipe) params) {
         return {
             user: [],
             params
@@ -29,7 +29,7 @@ export class UserController {
     }
 
     @Put(':id')
-    async update(@Body() body: UpdatePutUserDto, @Param() params) {
+    async update(@Body() body: UpdatePutUserDto, @Param('id', ParseIntPipe) params) {
         return {
             body,
             params
@@ -37,7 +37,7 @@ export class UserController {
     }
 
     @Patch(':id')
-    async updateParcial(@Body() body: UpdatePatchUserDto, @Param() params) {
+    async updateParcial(@Body() body: UpdatePatchUserDto, @Param('id', ParseIntPipe) params) {
         return {
             body,
             params
