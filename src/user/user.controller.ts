@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, } from "@nestjs/common";
+import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Patch, Post, Put, } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdatePutUserDto } from "./dto/update-put-user.dto";
 import { UpdatePatchUserDto } from "./dto/update-patch-user.dto";
@@ -42,10 +42,13 @@ export class UserController {
 
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id) {
-        return {
-            id
-        }
+        this.exist(id)
+        return this.userService.delete(id)
     }
 
-
+    async exist(id: number) {
+        if (!(await this.readOne(id))) {
+            throw new NotFoundException('The user doesnt exist');
+        }
+    }
 }
