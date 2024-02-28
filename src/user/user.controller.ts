@@ -25,30 +25,19 @@ export class UserController {
     }
 
     @Put(':id')
-    async update(@Body() body: UpdatePutUserDto, @Param('id', ParseIntPipe) params) {
-        return {
-            body,
-            params
-        }
+    async update(@Body() { email, name, password }: UpdatePutUserDto, @Param('id', ParseIntPipe) params) {
+        return this.userService.update(params, { email, name, password })
     }
 
     @Patch(':id')
-    async updateParcial(@Body() body: UpdatePatchUserDto, @Param('id', ParseIntPipe) params) {
-        return {
-            body,
-            params
-        }
+    async updateParcial(@Body() { email, name, password }: UpdatePatchUserDto, @Param('id', ParseIntPipe) params) {
+        return this.userService.updateParcial(params, { email, name, password })
     }
 
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id) {
-        this.exist(id)
         return this.userService.delete(id)
     }
 
-    async exist(id: number) {
-        if (!(await this.readOne(id))) {
-            throw new NotFoundException('The user doesnt exist');
-        }
-    }
+
 }
