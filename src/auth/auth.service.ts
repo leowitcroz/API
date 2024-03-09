@@ -11,18 +11,20 @@ export class AuthService {
     constructor(private readonly JWTService: JwtService, private readonly prisma: PrismaService, private readonly userService: UserService) { }
 
     async createToken(user: User) {
-        return this.JWTService.sign({
-            id: user.id,
-            name: user.name,
-            email: user.email,
-        },
-            {
-                expiresIn: '7 days',
-                subject: String(user.id),
-                issuer: 'login',
-                audience: 'users'
-            }
-        );
+        return {
+            accessToken: this.JWTService.sign({
+                id: user.id,
+                name: user.name,
+                email: user.email,
+            },
+                {
+                    expiresIn: '7 days',
+                    subject: String(user.id),
+                    issuer: 'login',
+                    audience: 'users'
+                }
+            )
+        }
     }
 
     async checkToken(token: string) {
