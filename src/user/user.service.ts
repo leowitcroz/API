@@ -34,26 +34,14 @@ export class UserService {
         })
     }
 
-    async update(id: number, { email, name, password }: UpdatePutUserDto) {
+    async update(id: number, { email, name, password, role }: UpdatePutUserDto) {
 
         this.exist(id);
-
-        if(email == undefined){
-            email = '';
-        }
-
-        if(name == undefined){
-            name = '';
-        }
-
-        if(password == undefined){
-            password = '';
-        }
 
         return this.prisma.user.update({
 
             data: {
-                email, name, password
+                email, name, password, role
             },
 
             where: {
