@@ -8,31 +8,31 @@ import { Role } from "src/enums/role.enum";
 import { RoleGuard } from "src/guards/role.Guard";
 import { AuthGuard } from "src/guards/auth.Guard";
 
+@Roles(Role.Admin)
 @UseGuards(AuthGuard,RoleGuard)
 @Controller('users')
 export class UserController {
 
     constructor(private readonly userService: UserService) { }
 
-    @Roles(Role.Admin)
+ 
     @Post()
     async create(@Body() { email, name, password, role}: CreateUserDto) {
         return await this.userService.create({ email, name, password,role })
     }
 
-    @Roles(Role.Admin)
     @Get()
     async read() {
         return await this.userService.list()
     }
 
-    @Roles(Role.Admin)
+
     @Get(':id')
     async readOne(@Param('id', ParseIntPipe) id) {
         return await this.userService.readOne(id)
     }  
 
-    @Roles(Role.Admin)
+ 
     @Put(':id')
     async update(@Body() { email, name, password, role }: UpdatePutUserDto, @Param('id', ParseIntPipe) params) {
         return this.userService.update(params, { email, name, password, role })
