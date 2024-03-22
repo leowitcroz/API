@@ -7,6 +7,7 @@ import { Roles } from "src/decorators/role.decorator";
 import { Role } from "src/enums/role.enum";
 import { RoleGuard } from "src/guards/role.Guard";
 import { AuthGuard } from "src/guards/auth.Guard";
+import { Throttle, ThrottlerGuard } from "@nestjs/throttler";
 
 @Roles(Role.Admin)
 @UseGuards(AuthGuard,RoleGuard)
@@ -38,8 +39,6 @@ export class UserController {
         return this.userService.update(params, { email, name, password, role })
     }
 
-
-    @Roles(Role.Admin)
     @Patch(':id')
     async updateParcial(@Body() { email, name, password, role }: UpdatePatchUserDto, @Param('id', ParseIntPipe) params) {
         return this.userService.updateParcial(params, { email, name, password, role })
