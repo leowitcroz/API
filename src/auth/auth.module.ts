@@ -8,7 +8,7 @@ import { User } from 'src/decorators/user.decorator';
 
 @Module({
     imports: [JwtModule.register({
-        secret: "DTzkbFVrBHyfu4zK6xxJecDoYPuFd7oE"
+        secret: process.env.JWT_SECRET
     }), 
     forwardRef(() => UserModule),
     PrismaModule
